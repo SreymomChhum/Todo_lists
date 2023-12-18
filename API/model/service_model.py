@@ -1,14 +1,15 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Boolean
+from sqlalchemy.orm import sessionmaker
 from db import Base
 
 from .base_model import BaseModel
-
 
 class ServiceModel(BaseModel, Base):
     __tablename__ = "services"
     id = Column(Integer, primary_key=True)
     title = Column(String(64), nullable=False, unique=True)
     image = Column(String(128), nullable=False, index=True)
+    status = Column(Boolean)
     description = Column(String(128), nullable=False, index=True)
 
     

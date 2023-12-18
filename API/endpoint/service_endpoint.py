@@ -51,6 +51,8 @@ class UserEndpoint(Resource):
 
             existing_user.image = user.get('image')
 
+            existing_user.status = user.get('status')
+
             existing_user.description = user.get('description')
 
             session.commit()
@@ -62,6 +64,16 @@ class UserEndpoint(Resource):
             return make_response(user_json, 200)
         else:
             return make_response({"message": "User not found"}, 404)
+        
+    # def patch(self):
+
+    #     service = request.get_json()
+
+    #     service_model = ServiceModel(service)
+        
+    #     service_model.update_status()
+
+    #     return make_response({}, 200)
 
 
     def delete(self, user_id):

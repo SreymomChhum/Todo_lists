@@ -15,20 +15,31 @@ class BaseModel:
     def get(self, id):
         return self._query.filter(self.__class__.id == id).one()
     
-    # def add(self):
-    #     self._session.add(self)
-    #     self._commit()
+    def add(self):
+        self._session.add(self)
+        self._commit()
         
-    # def update(self):
-    #     self._query.filter(self.__class__.id == self.id).update(
+
+    def update(self):
+        self._query.filter(self.__class__.id == self.id).update(
+            {
+                k: v
+                for  k, v in self.__dict__.items()
+                if not k.startswith("_")
+                and k not in ["_sa_instance_state", "_session", "_query"]
+            }
+        )
+        self._commit()
+
+    # def update_status(self):
+
+    #     self.__query.filter(self.__class__.id == self.id).update(
     #         {
-    #             k: v
-    #             for  k, v in self.__dict__.items()
-    #             if not k.startswith("_")
-    #             and k not in ["_sa_instance_state", "_session", "_query"]
+    #             self.__class__.status: self.status
     #         }
     #     )
     #     self._commit()
+
 
     def delete(self):
         self._session.query(self.__class__).filter(
